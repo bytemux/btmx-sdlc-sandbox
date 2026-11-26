@@ -1,0 +1,29 @@
+# PR title = Conventional Commits. With squash merge the PR title becomes the commit on main.
+# Blocks merge only when the ruleset on main requires the "pr-title" check (public repo or GitHub Pro).
+name: pr-title
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+permissions:
+  pull-requests: read
+jobs:
+  pr-title:
+    name: pr-title
+    runs-on: ubuntu-latest
+    steps:
+      - uses: amannn/action-semantic-pull-request@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          types: |
+            feat
+            fix
+            refactor
+            perf
+            test
+            docs
+            style
+            build
+            ci
+            chore
+            revert
